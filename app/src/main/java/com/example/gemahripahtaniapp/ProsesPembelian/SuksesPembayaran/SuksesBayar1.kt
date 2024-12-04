@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -27,20 +29,24 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.gemahripahtaniapp.R
 import com.example.gemahripahtaniapp.SplashScreen.GemahRipahTaniApp
+import com.example.gemahripahtaniapp.SplashScreen.MainApp
 
 class SuksesBayar1 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             GemahRipahTaniApp ()
             // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                SuksesScreen()
+               MainApp()
             }
         }
     }
@@ -48,7 +54,7 @@ class SuksesBayar1 : ComponentActivity() {
 
 
 @Composable
-fun SuksesScreen( ) {
+fun SuksesScreen(navController: NavHostController) {
     Surface (
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -59,24 +65,6 @@ fun SuksesScreen( ) {
             {
             }
             Spacer(modifier = Modifier.height(16.dp)
-            )
-            Text(
-                text = "Kembali ke Beranda",
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                ),
-                modifier = Modifier
-                    .padding(start = 27.dp, end = 27.dp, top = 760.dp)
-                    .width(358.dp)
-                    .height(52.dp)
-                    .background(
-                        color = Color(0xFF109179),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .padding(vertical = 12.dp)
             )
         }
 
@@ -336,6 +324,27 @@ fun SuksesScreen( ) {
                 .height(24.dp)
                 .padding(start = 298.dp, top = 530.dp, end = 60.dp, bottom = 270.dp)
         )
+        ClickableText(
+            text = AnnotatedString("Selesai"),
+            onClick = {
+                navController.navigate("")
+            },
+            style = TextStyle(
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                textAlign = TextAlign.Center,
+            ),
+            modifier = Modifier
+                .padding(start = 27.dp, end = 27.dp, top = 760.dp, bottom = 20.dp)
+                .width(358.dp)
+                .height(52.dp)
+                .background(
+                    color = Color(0xFF109179),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .padding(vertical = 12.dp)
+        )
 
 
     }
@@ -346,5 +355,6 @@ fun SuksesScreen( ) {
 @Composable
 fun GreetingPreview() {
     GemahRipahTaniApp ()
-    SuksesScreen( )
+    val navController = rememberNavController()
+    SuksesScreen( navController = navController)
 }

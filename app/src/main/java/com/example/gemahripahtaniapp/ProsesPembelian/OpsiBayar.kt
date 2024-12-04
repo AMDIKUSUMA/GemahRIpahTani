@@ -1,50 +1,64 @@
 package com.example.gemahripahtaniapp.ProsesPembelian
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.gemahripahtaniapp.R
 import com.example.gemahripahtaniapp.SplashScreen.GemahRipahTaniApp
+import com.example.gemahripahtaniapp.SplashScreen.MainApp
 
 class OpsiBayar : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             GemahRipahTaniApp ()
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ScreenBayar()
+                    MainApp()
                 }
             }
         }
@@ -52,226 +66,222 @@ class OpsiBayar : ComponentActivity() {
 
 
 @Composable
-fun ScreenBayar() {
+fun BayarScreen(navController: NavHostController) {
+    val scrollState = rememberScrollState()
+    var name by remember {
+        mutableStateOf("")
+    }
+    var email by remember {
+        mutableStateOf("")
+    }
+
+    var password by remember {
+        mutableStateOf("")
+    }
     Surface (
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     )
-
-
     {
         Column {
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(93.dp)
+                    .verticalScroll(scrollState)
                     .background(color = Color(0xFF109179)),
                 contentAlignment = Alignment.Center
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.kiri),
+                    contentDescription = "image description",
+                    modifier = Modifier
+                        .padding(start = 0.dp, end = 330.dp,)
+                        .width(200.dp)
+                        .height(24.dp)
+                        .clickable {
+                            navController.navigate("pemesanan")}
+                )
                 Text(
                     text = "Pilih Pembayaran",
                     style = TextStyle(
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        lineHeight = 26.sp,
+                        fontWeight = FontWeight(700),
+                        color = Color(0xFFFFFFFF),
                     ),
-                    modifier = Modifier.padding(start = 48.dp, end = 200.dp, top = 30.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.kiri),
-                    contentDescription = "image description",
-                    contentScale = ContentScale.None,
                     modifier = Modifier
-                        .padding(start = 8.dp, end = 330.dp, top = 30.dp)
-                        .width(24.dp)
-                        .height(24.dp)
+                        .width(323.dp)
+                        .height(20.dp)
+                        .padding(start = 21.dp, end = 38.dp)
                 )
-
             }
-
-            Spacer(modifier = Modifier.height(16.dp)
+            Spacer(modifier = Modifier.height(30.dp)
             )
-
-
             Text(
-                text = "Selesai",
+                text = "E - Wallet",
                 style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
+                    fontSize = 14.sp,
+                    lineHeight = 22.4.sp,
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF40434D),
                 ),
                 modifier = Modifier
-                    .padding(start = 27.dp, end = 27.dp, top = 640.dp)
-                    .width(358.dp)
-                    .height(52.dp)
-                    .background(
-                        color = Color(0xFF109179),  // Warna latar belakang hijau
-                        shape = RoundedCornerShape(12.dp)
-                        // Sudut melengkung
-                    )
-                    .padding(vertical = 12.dp)  // Padding untuk menyesuaikan posisi teks
+                    .width(222.dp)
+                    .height(22.dp)
+                    .padding(start = 20.dp)
             )
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 26.dp, top = 20.dp)
+            ){
+                Text(
+                    text = "DANA",
+
+                    // body/Large/bold
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF232323),
+                    ),
+                    modifier = Modifier
+                        .width(212.dp)
+                        .height(27.dp)
+                        .padding(start = 20.dp)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.radio),
+                    contentDescription = "image description",
+                    modifier = Modifier
+                        .padding(start = 120.dp,)
+                        .width(16.dp)
+                        .height(16.dp)
+                )
+            }
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 26.dp, top = 20.dp)
+            ){
+                Text(
+                    text = "OVO",
+
+                    // body/Large/bold
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF232323),
+                    ),
+                    modifier = Modifier
+                        .width(212.dp)
+                        .height(27.dp)
+                        .padding(start = 20.dp)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.radio),
+                    contentDescription = "image description",
+                    modifier = Modifier
+                        .padding(start = 120.dp,)
+                        .width(16.dp)
+                        .height(16.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(30.dp)
+            )
+            Text(
+                text = "Virtual Account",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 22.4.sp,
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF40434D),
+                ),
+                modifier = Modifier
+                    .width(222.dp)
+                    .height(22.dp)
+                    .padding(start = 20.dp)
+            )
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 26.dp, top = 20.dp)
+            ){
+                Text(
+                    text = "MANDIRI",
+
+                    // body/Large/bold
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF232323),
+                    ),
+                    modifier = Modifier
+                        .width(212.dp)
+                        .height(27.dp)
+                        .padding(start = 20.dp)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.radiohitam),
+                    contentDescription = "image description",
+                    modifier = Modifier
+                        .padding(start = 120.dp,)
+                        .width(16.dp)
+                        .height(16.dp)
+                )
+            }
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 26.dp, top = 20.dp)
+            ){
+                Text(
+                    text = "BNI",
+
+                    // body/Large/bold
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFF232323),
+                    ),
+                    modifier = Modifier
+                        .width(212.dp)
+                        .height(27.dp)
+                        .padding(start = 20.dp)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.radio),
+                    contentDescription = "image description",
+                    modifier = Modifier
+                        .padding(start = 120.dp,)
+                        .width(16.dp)
+                        .height(16.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(430.dp))
+            Column (  modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally)
+            {
+                Button(
+                    onClick = {
+                        Log.i("Credential", "email : $email password : $password")
+                        navController.navigate("halPemesanan")
+                    },
+                    modifier = Modifier
+                        .width(339.dp)
+//                    .padding(top = 30.dp, start = 26.dp, end = 0.dp)
+                        .height(52.dp)
+                        .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF109179)
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                {
+                    Text(
+                        text = "Selesai",
+                        color = Color.White
+                    )
+                }
+            }
         }
-
-        Text(
-            text = "E - Wallet",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 22.4.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF40434D),
-            ),
-            modifier = Modifier
-                .width(222.dp)
-                .height(22.dp)
-                .padding(start = 20.dp, top = 120.dp, bottom = 690.dp, end = 300.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 27.dp, top =150.dp, end = 27.dp, bottom = 640.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Text(
-            text = "DANA",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 22.4.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF40434D),
-            ),
-            modifier = Modifier
-                .width(222.dp)
-                .height(22.dp)
-                .padding(start = 51 .dp, top = 160.dp, bottom = 650.dp, end = 300.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.radio),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .border(width = 2.dp, color = Color(0xFF232323))
-                .padding(start = 330 .dp, top = 160.dp, bottom = 650.dp, end = 30.dp)
-                .width(16.dp)
-                .height(16.dp)
-
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 27.dp, top =190.dp, end = 27.dp, bottom = 600.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Text(
-            text = "OVO",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 22.4.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF40434D),
-            ),
-            modifier = Modifier
-                .width(222.dp)
-                .height(22.dp)
-                .padding(start = 51.dp, top = 200.dp, bottom = 610.dp, end = 300.dp)
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.radio),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .border(width = 2.dp, color = Color(0xFF232323))
-                .padding(start = 330 .dp, top = 200.dp, bottom = 610.dp, end = 30.dp)
-                .width(16.dp)
-                .height(16.dp)
-
-        )
-
-
-        Text(
-            text = "Virtual Account",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 22.4.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF40434D),
-            ),
-            modifier = Modifier
-                .width(222.dp)
-                .height(22.dp)
-                .padding(start = 20.dp, top = 235.dp, bottom = 575.dp, end = 300.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 27.dp, top =270.dp, end = 27.dp, bottom = 520.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Text(
-            text = "MANDIRI",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 22.4.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF40434D),
-            ),
-            modifier = Modifier
-                .width(222.dp)
-                .height(22.dp)
-                .padding(start = 51.dp, top = 280.dp, bottom = 530.dp, end = 280.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.radiohitam),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .border(width = 2.dp, color = Color(0xFF232323))
-                .padding(start = 330 .dp, top = 280.dp, bottom = 530.dp, end = 30.dp)
-                .width(16.dp)
-                .height(16.dp)
-
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 27.dp, top =310.dp, end = 27.dp, bottom = 480.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Text(
-            text = "BRI",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 22.4.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF40434D),
-            ),
-            modifier = Modifier
-                .width(222.dp)
-                .height(22.dp)
-                .padding(start = 51.dp, top = 320.dp, bottom = 490.dp, end = 280.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.radio),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .border(width = 2.dp, color = Color(0xFF232323))
-                .padding(start = 330 .dp, top = 320.dp, bottom = 490.dp, end = 30.dp)
-                .width(16.dp)
-                .height(16.dp)
-
-        )
     }
 
 }
@@ -283,5 +293,6 @@ fun ScreenBayar() {
 @Composable
 fun GreetingPrev() {
     GemahRipahTaniApp ()
-        ScreenBayar()
+    val navController = rememberNavController()
+    BayarScreen(navController = navController)
     }

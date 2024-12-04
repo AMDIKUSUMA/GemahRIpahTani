@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    //alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -53,12 +54,14 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
    // implementation("androidx.compose.ui:ui:1.5.0")
     //implementation("androidx.navigation:-compose:2.6.0")
     //implementation("androidx.compose.material:1.5.0")
@@ -66,6 +69,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.ui.test.android)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,6 +77,20 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
    implementation("androidx.navigation:navigation-compose:2.5.3")
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    //implementation("io.coil-kt:coil.compose:2.5.0")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("androidx.compose.material:material-icons-extended:1.5.3")
+    //image
+   //
+    implementation("androidx.navigation:navigation-compose:2.7.2")
+
+// implementation(libs.coil.compose)
+   // implementation ("androidx.core:core-ktx:1.10.1")
+   // implementation ("androidx.appcompat:appcompat:1.6.1")
 
 }

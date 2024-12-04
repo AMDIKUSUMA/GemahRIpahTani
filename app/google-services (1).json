@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970050361931",
+    "project_id": "gemahripahtaniapp",
+    "storage_bucket": "gemahripahtaniapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970050361931:android:ecf53528ca50cf8d304bce",
+        "android_client_info": {
+          "package_name": "com.example.gemahripahtaniapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEiXGp__IGM5qEruuS6L-HcqSRxQB9tiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

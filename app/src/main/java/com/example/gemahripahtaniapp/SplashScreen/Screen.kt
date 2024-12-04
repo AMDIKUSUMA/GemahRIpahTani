@@ -1,5 +1,6 @@
 package com.example.gemahripahtaniapp.SplashScreen
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,10 +27,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gemahripahtaniapp.Home.HomeScreen
 import com.example.gemahripahtaniapp.R
 import kotlinx.coroutines.delay
 
@@ -37,28 +35,20 @@ class Screen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SplashScreen()
+            val navController = rememberNavController()
+            SplashScreen(navController = navController)
         }
     }
 }
 
-@Composable
-fun SplashScreen() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") { Greeting(navController) }
-        composable("masuk") { MasukScreen() }
-        composable("home") { HomeScreen() }
-    }
-}
 
 @Composable
-fun Greeting(navController: NavController) {
-    // Delay sebelum pindah ke halaman Home
+fun SplashScreen(navController: NavController) {
+
     LaunchedEffect(Unit) {
-        delay(4000) // Splash screen akan muncul selama 4 detik
+        delay(4000)
         navController.navigate("home") {
-            popUpTo("splash") { inclusive = true } // Menghapus splash dari stack
+            popUpTo("splash") { inclusive = true }
         }
     }
 
@@ -94,7 +84,7 @@ fun Greeting(navController: NavController) {
 }
 
 @Composable
-fun HomeScreen() {
+fun SplashScreenn() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -114,5 +104,6 @@ fun HomeScreen() {
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun GreetingPreview() {
-    SplashScreen()
+    val navController = rememberNavController()
+    SplashScreen(navController = navController)
 }

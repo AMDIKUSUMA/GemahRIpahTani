@@ -1,237 +1,191 @@
 package com.example.gemahripahtaniapp.SplashScreen
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.gemahripahtaniapp.R
-import com.example.gemahripahtaniapp.ui.theme.GemahRipahTaniAppTheme
+
 
 class Akun : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GemahRipahTaniAppTheme {  }
+            GemahRipahTaniApp()
             // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
             ) {
-                AkunScreen()
+                MainApp()
             }
         }
     }
 }
 
 
+
 @Composable
-fun AkunScreen() {
-    Surface (
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    )
+fun AkunScreen(navController: NavHostController) {
 
-
-    {
-        Column {
-
-
-            Spacer(modifier = Modifier.height(16.dp)
-            )
-
-
-            Text(
-                text = "Buat Akun",
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                ),
-                modifier = Modifier
-                    .padding(start = 27.dp, end = 27.dp, top = 430.dp)
-                    .width(358.dp)
-                    .height(52.dp)
-                    .background(
-                        color = Color(0xFF109179),  // Warna latar belakang hijau
-                        shape = RoundedCornerShape(12.dp)
-                        // Sudut melengkung
-                    )
-                    .padding(vertical = 12.dp)  // Padding untuk menyesuaikan posisi teks
-            )
-        }
-        Text(
-            text = "Buat akun anda",
-            style = TextStyle(
-                fontSize = 20.sp,
-                lineHeight = 50.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-            ),
-            modifier = Modifier
-                .width(252.dp)
-                .height(50.dp)
-                .padding(start = 35.dp, end = 125.dp, top = 153.dp, bottom = 641.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 35.dp, top =224.dp, end = 38.dp, bottom = 560.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-
-        )
-        Text(
-            text = "Naufal Nurrohman",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF979797),
-            ),
-            modifier = Modifier
-                .width(130.dp)
-                .height(21.dp)
-                .padding(start = 53.dp, end = 191.dp, top = 240.dp, bottom = 575.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 35.dp, top =293.dp, end = 38.dp, bottom = 490.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Text(
-            text = "esjeruk@gmail.com",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF979797),
-            ),
-            modifier = Modifier
-                .width(139.dp)
-                .height(21.dp)
-                .padding(start = 53.dp, end = 191.dp, top = 307.dp, bottom = 505.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 35.dp, top =359.dp, end = 38.dp, bottom = 421.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Text(
-            text = "••••••••••",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF979797),
-            ),
-            modifier = Modifier
-                .width(58.dp)
-                .height(21.dp)
-                .padding(start = 53.dp, end = 263.dp, top = 374.dp, bottom = 435.dp)
-        )
-        Text(
-            text = "Atau ",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 16.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                textAlign = TextAlign.Center,
-            ),
-            modifier = Modifier
-                .width(34.dp)
-                .height(16.dp)
-                .padding(start = 13.dp, end = 13.dp, top = 562.dp, bottom = 248.dp)
-
-        )
-        Text(
-            text = "Sudah punya akun? Masuk",
-            style = TextStyle(
-                fontSize = 12.sp,
-                lineHeight = 18.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-                textAlign = TextAlign.Center,
-            ),
-            modifier = Modifier
-                .width(166.dp)
-                .height(18.dp)
-                .padding(start = 123.dp, end = 123.dp, top = 755.dp, bottom = 60.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 45.dp, top =600.dp, end = 200.dp, bottom = 165.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 200.dp, top =600.dp, end = 45.dp, bottom = 165.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Image(
-            painter = painterResource(id = R.drawable.google),
-            contentDescription = "image description",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .width(30.dp)
-                .height(30.dp)
-                .padding(start = 250.dp, top = 610.dp, end = 100.dp, bottom = 170.dp)
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.fb),
-            contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .width(23.dp)
-                .height(23.dp)
-                .padding(start = 101.dp, top = 615.dp, end = 260.dp, bottom = 180.dp)
-        )
-
+    var name by remember {
+        mutableStateOf("")
+    }
+    var email by remember {
+        mutableStateOf("")
     }
 
+    var password by remember {
+        mutableStateOf("")
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
+
+    { Spacer(modifier = Modifier.height(66.dp))
+        Text(
+        text = "Buat akun anda",
+        style = TextStyle(
+            fontSize = 20.sp,
+            lineHeight = 50.sp,
+            fontWeight = FontWeight(400),
+            color = Color(0xFF000000),
+        ),
+        modifier = Modifier
+            .width(332.dp)
+            .height(70.dp)
+
+    )
+        Spacer(modifier = Modifier.height(36.dp))
+
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text(text = "Nama") }
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text(text = "Email") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text(text = "Password") },
+            visualTransformation = PasswordVisualTransformation(),
+
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                Log.i("Credential", "email : $email password : $password")
+                navController.navigate("berhasil")
+            },
+            modifier = Modifier
+                .width(339.dp)
+                .height(52.dp)
+                .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp)),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF109179)
+            ),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text(
+                text = "Masuk",
+                color = Color.White
+            )
+        }
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        Text(
+            text = "Atau"
+        )
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.fbk),
+                contentDescription = "Facebook",
+                modifier = Modifier
+                    .size(50.dp)
+                    .clickable { }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.google),
+                contentDescription = "Google",
+                modifier = Modifier
+                    .size(50.dp)
+                    .clickable { }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(100.dp))
+
+        TextButton(onClick = {}) {
+            Text(text = "Belum punya akun?Daftar", modifier = Modifier
+                .clickable { },
+                color = Color(0xFF000000))
+        }
+    }
 }
 
 
 object Variables {
-    val spacingSm: Dp=8.dp
+    val spacingSm: Dp =8.dp
     val radiLg: Dp=12.dp
     val radiMlg: Dp = 8.dp
 }
@@ -242,6 +196,7 @@ object Variables {
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun Greetingpr() {
-    GemahRipahTaniAppTheme {  }
-    AkunScreen()
+    GemahRipahTaniApp()
+    val navController = rememberNavController()
+    AkunScreen(navController = navController)
 }

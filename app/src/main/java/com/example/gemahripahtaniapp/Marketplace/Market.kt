@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,8 +12,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,581 +28,545 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.gemahripahtaniapp.R
 import com.example.gemahripahtaniapp.SplashScreen.GemahRipahTaniApp
+import com.example.gemahripahtaniapp.SplashScreen.MainApp
+
 //import com.example.gemahripahtaniapp.SplashScreen.GemahTani
 
 class Market : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             GemahRipahTaniApp()
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MarketScreen()
-                }
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                MainApp()
             }
         }
     }
+}
 
 
 @Composable
-fun MarketScreen() {
+fun MarketScreen(navHostController: NavHostController) {
+    val scrollState = rememberScrollState()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        Column {
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState) // Menambahkan scrolling vertikal
+        )
+        {
             // Top Bar
             Box(
                 modifier = Modifier
-                    .width(412.dp)
+                    .width(512.dp)
                     .height(93.dp)
                     .background(color = Color(0xFF109179))
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.cari),
-                    contentDescription = "image description",
-                    contentScale = ContentScale.None,
-                    modifier = Modifier
-                        .padding(start = 1.dp, top = 53.dp)
-                        .width(46.dp)
-                        .height(46.dp)
+                Row {
+                    Image(
+                        painter = painterResource(id = R.drawable.kiri),
+                        contentDescription = "image description",
+                        modifier = Modifier
+                            .padding(start = 18.dp, end = 330.dp, top = 40.dp)
+                            .width(24.dp)
+                            .height(24.dp)
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.keranjang),
+                        contentDescription = "image description",
+                        modifier = Modifier
+                            .padding(top = 40.dp)
+                            .width(24.dp)
+                            .height(24.dp)
 
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.keranjang),
-                    contentDescription = "image description",
-                    contentScale = ContentScale.None,
-                    modifier = Modifier
-                        .padding(start = 360.dp, top = 53.dp)
-                        .width(46.dp)
-                        .height(46.dp)
-
-                )
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-
-            Row(
+            LazyRow(
                 modifier = Modifier
                     .padding(start = 5.dp, top = 10.dp, end = 5.dp)
             ) {
-
-                Box(
-                    modifier = Modifier
-                        .shadow(elevation = 1.dp, spotColor = Color(0x0A000000), ambientColor = Color(0x0A000000))
-                        .shadow(elevation = 9.9.dp, spotColor = Color(0x40000000), ambientColor = Color(0x40000000))
-                        .width(187.dp)
-                        .height(60.dp)
-                        .background(color = Color.White, shape = RoundedCornerShape(size = Variables.radiLg))
-                        .padding(8.dp)
-                ) {
-                    Text(
-                        text = "Peralatan Hidroponik",
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF109179),
-                        ),
-                        modifier = Modifier.align(Alignment.Center)
+                items(
+                    listOf(
+                        "Peralatan Hidroponik",
+                        "Nutrisi dan Media Tanam",
+                        "Benih dan Bibit",
+                        "Hasil Panen"
                     )
+                ) { item ->
+                    Box(
+                        modifier = Modifier
+                            .shadow(
+                                elevation = 1.dp,
+                                spotColor = Color(0x0A000000),
+                                ambientColor = Color(0x0A000000)
+                            )
+                            .shadow(
+                                elevation = 9.9.dp,
+                                spotColor = Color(0x40000000),
+                                ambientColor = Color(0x40000000)
+                            )
+                            .width(187.dp)
+                            .height(60.dp)
+                            .background(
+                                color = if (item == "Nutrisi dan Media Tanam") Color(0xFF109179) else Color(0xFFFFFFFF),
+                                shape = RoundedCornerShape(size = Variables.radiLg)
+                            )
+                            .padding(8.dp)
+                            .padding(end = 16.dp)
+                    ) {
+                        if (item == "Benih dan Bibit") {
+                            ClickableText(
+                                text = AnnotatedString(item),
+                                onClick = {
+                                    navHostController.navigate("mainEcommerce")
+                                },
+                                style = TextStyle(
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = Color(0xFF109179),
+                                ),
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        } else {
+                            Text(
+                                text = item,
+                                style = TextStyle(
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = if (item == "Nutrisi dan Media Tanam") Color.White else Color(0xFF109179),
+                                ),
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
                 }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                // Box for "Nutrisi dan Media Tanam"
-                Box(
-                    modifier = Modifier
-                        .shadow(elevation = 1.dp, spotColor = Color(0x0A000000), ambientColor = Color(0x0A000000))
-                        .shadow(elevation = 9.9.dp, spotColor = Color(0x40000000), ambientColor = Color(0x40000000))
-                        .width(187.dp)
-                        .height(60.dp)
-                        .background(color = Color(0xFF109179), shape = RoundedCornerShape(size = Variables.radiLg))
-                        .padding(8.dp)
-                ) {
-                    Text(
-                        text = "Nutrisi dan Media Tanam",
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFFFFFFFF),
-                        ),
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-
-
-                }
-
             }
 
-        }
-        Box(
-            modifier = Modifier
-                .padding(start = 22.dp, top =186.dp, end = 200.dp, bottom = 430.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
 
+
+
+
+            Spacer(modifier = Modifier.width(16.dp))
+        }
+    }
+    Box(
+        modifier = Modifier
+    )
+    {
         Image(
             painter = painterResource(id = R.drawable.hi12),
             contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .padding(start = 34.dp, top = 196.dp, end = 210.dp, bottom = 525.dp)
-                .width(148.99998.dp)
-                .height(115.53488.dp)
+                .padding(start = 36.dp, top = 196.dp, end = 210.dp, bottom = 525.dp)
+                .width(148.dp)
+                .height(120.dp)
         )
-        Text(
-            text = "Pupuk Hidroponik ABMIX Cair 1 Liter",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-            ),
+        Column(
             modifier = Modifier
-                .width(145.dp)
-                .height(40.dp)
-                .padding(start =34.dp,top= 315.dp,end=239.dp, bottom = 480.dp)
+                .padding(start = 36.dp, top = 320.dp, end = 80.dp),
         )
-        Text(
-            text = "Nustrisi & Media Tanam",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF878787),
-            ),
-            modifier =Modifier
-                .width(114.dp)
-                .height(14.dp)
-                .padding(start = 34.dp, top = 350.dp, end = 250.dp, bottom = 460.dp)
-        )
-        Text(
-            text = "Rp 62.500\n",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF117462),
-            ),
-            modifier = Modifier
-                .width(90.dp)
-                .height(20.dp)
-                .padding(start = 34.dp, top = 370.dp, end = 290.dp, bottom = 440.dp)
-        )
-        Text(
-            text = "4.9",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier
-                .width(16.dp)
-                .height(15.dp)
-                .padding(start = 165.dp, end = 210.dp, top = 375.dp, bottom = 440.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.star),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .padding(start = 150.dp, end = 230.dp, top = 375.dp, bottom = 440.dp)
-                .width(11.dp)
-                .height(11.dp)
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 205.dp, top =186.dp, end = 25.dp, bottom = 430.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
+        {
+            // Nama produk
+            Text(
+                text = "Pupuk Hidroponik ABMIX Cair 1 Liter",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                ),
+                modifier = Modifier
+                    .padding(end = 130.dp)
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = "Nustrisi & Media Tanam",
+                style = TextStyle(
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray
+                )
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Row(
+
+            ) {
+                Text(
+                    text = "Rp 62.500",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF117462)
+                    )
+                )
+                Spacer(modifier = Modifier.width(46.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.star),
+                        contentDescription = "Star Rating",
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Text(
+                        text = "4.9",
+                        style = TextStyle(
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black
+                        )
+                    )
+                }
+            }
+        }
+    }
+    Box(
+        modifier = Modifier
+    )
+    {
         Image(
             painter = painterResource(id = R.drawable.hi13),
             contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .padding(start = 215.dp, top = 196.dp, end = 34.dp, bottom = 525.dp)
-                .width(148.99998.dp)
-                .height(115.53488.dp)
+                .padding(start = 230.dp, top = 196.dp, end = 20.dp, bottom = 525.dp)
+                .width(148.dp)
+                .height(120.dp)
         )
+        Column(
+            modifier = Modifier
+                .padding(start = 230.dp, top = 320.dp),
+        )
+        {
+            Text(
+                text = ("Pupuk Hidroponik ABMIX Hydro J"),
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                ),
+                modifier = Modifier
+                    .padding(end = 30.dp)
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = "Nustrisi & Media Tanam",
+                style = TextStyle(
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray
+                )
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Row(
 
-        Text(
-            text = "Pupuk Hidroponik ABMIX Hydro J",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-            ),
-            modifier = Modifier
-                .width(145.dp)
-                .height(40.dp)
-                .padding(start =215.dp,top= 315.dp,end=34.dp, bottom = 480.dp)
-        )
-        Text(
-            text = "Nustrisi & Media Tanam",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF878787),
-            ),
-            modifier =Modifier
-                .width(114.dp)
-                .height(14.dp)
-                .padding(start = 215.dp, top = 350.dp, end = 34.dp, bottom = 460.dp)
-        )
-        Text(
-            text = "Rp 22.000\n",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF117462),
-            ),
-            modifier = Modifier
-                .width(90.dp)
-                .height(20.dp)
-                .padding(start = 215.dp, top = 370.dp, end = 90.dp, bottom = 440.dp)
-        )
-        Text(
-            text = "4.9",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier
-                .width(16.dp)
-                .height(15.dp)
-                .padding(start = 340.dp, end = 34.dp, top = 375.dp, bottom = 440.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.star),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .padding(start = 325.dp, end = 55.dp, top = 375.dp, bottom = 440.dp)
-                .width(11.dp)
-                .height(11.dp)
-        )
+            ) {
+                Text(
+                    text = "Rp 1.000",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF117462)
+                    )
+                )
+                Spacer(modifier = Modifier.width(46.dp))
+                Row(
+
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.star),
+                        contentDescription = "Star Rating",
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Text(
+                        text = "4.9",
+                        style = TextStyle(
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.Black
+                        )
+                    )
+                }
+            }
+        }
+
         Box(
             modifier = Modifier
-                .padding(start = 205.dp, top =410.dp, end = 25.dp, bottom = 200.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Image(
-            painter = painterResource(id = R.drawable.hal3),
-            contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .padding(start = 215.dp, top = 420.dp, end = 34.dp, bottom = 300.dp)
-                .width(148.99998.dp)
-                .height(115.53488.dp)
-        )
-        Text(
-            text = "Air Stone 2 cm Hidroponik",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-            ),
-            modifier = Modifier
-                .width(145.dp)
-                .height(40.dp)
-                .padding(start = 215.dp,top= 540.dp,end = 34.dp, bottom = 250.dp)
-        )
-        Text(
-            text = "Nustrisi & Media Tanam",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF878787),
-            ),
-            modifier =Modifier
-                .width(114.dp)
-                .height(14.dp)
-                .padding(start = 215.dp, top = 580.dp, end = 34.dp, bottom = 230.dp)
-        )
-        Text(
-            text = "Rp 2.000\n",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF117462),
-            ),
-            modifier = Modifier
-                .width(90.dp)
-                .height(20.dp)
-                .padding(start = 215.dp, top = 600.dp, end = 90.dp, bottom = 210.dp)
-        )
-        Text(
-            text = "4.9",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier
-                .width(16.dp)
-                .height(15.dp)
-                .padding(start = 340.dp, end = 34.dp, top = 605.dp, bottom = 210.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.star),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .padding(start = 325.dp, end = 55.dp, top = 605.dp, bottom = 210.dp)
-                .width(11.dp)
-                .height(11.dp)
-        )
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.img1),
+                contentDescription = "image description",
+                modifier = Modifier
+                    .padding(start = 36.dp, top = 416.dp, bottom = 315.dp,end = 210.dp, )
+                    .width(148.dp)
+                    .height(120.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(start = 36.dp, top = 540.dp, end = 80.dp),
+            ) {
+                Text(
+                    text = "Roclwool Hidroponik Be Grow",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier
+                        .padding(end = 140.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Nustrisi & Media Tanam",
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Row() {
+                    Text(
+                        text = "Rp 68.000",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF117462)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(46.dp))
+                    Row() {
+                        Image(
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = "Star Rating",
+                            modifier = Modifier.size(12.dp)
+                        )
+                        Text(
+                            text = "4.9",
+                            style = TextStyle(
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.Black
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
         Box(
             modifier = Modifier
-                .padding(start = 22.dp, top =410.dp, end = 200.dp, bottom = 200.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Image(
-            painter = painterResource(id = R.drawable.img1),
-            contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .padding(start = 34.dp, top = 420.dp, end = 210.dp, bottom = 300.dp)
-                .width(148.99998.dp)
-                .height(115.53488.dp)
-        )
-        Text(
-            text = "Roclwool Hidroponik Be Grow",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-            ),
-            modifier = Modifier
-                .width(145.dp)
-                .height(40.dp)
-                .padding(start = 34.dp,top= 540.dp,end = 225.dp, bottom = 250.dp)
-        )
-        Text(
-            text = "Nustrisi & Media Tanam",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF878787),
-            ),
-            modifier =Modifier
-                .width(114.dp)
-                .height(14.dp)
-                .padding(start = 34.dp, top = 580.dp, end = 250.dp, bottom = 230.dp)
-        )
-        Text(
-            text = "Rp 68.000\n",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF117462),
-            ),
-            modifier = Modifier
-                .width(90.dp)
-                .height(20.dp)
-                .padding(start = 34.dp, top = 600.dp, end = 290.dp, bottom = 210.dp)
-        )
-        Text(
-            text = "4.9",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier
-                .width(16.dp)
-                .height(15.dp)
-                .padding(start = 165.dp, end = 210.dp, top = 605.dp, bottom = 210.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.star),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .padding(start = 150.dp, end = 230.dp, top = 605.dp, bottom = 210.dp)
-                .width(11.dp)
-                .height(11.dp)
-        )
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.hal3),
+                contentDescription = "image description",
+                modifier = Modifier
+                    .padding(start = 230.dp, top = 416.dp, bottom = 315.dp, end = 20.dp)
+                    .width(148.dp)
+                    .height(120.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(start = 230.dp, top = 540.dp),
+            ) {
+                Text(
+                    text = "Air Stone 2 cm Hidroponik",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Black
+                    ),
+                    modifier = Modifier
+                        .padding(end = 30.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Nustrisi & Media Tanam",
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Row() {
+                    Text(
+                        text = "Rp 2.700",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF117462)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(46.dp))
+                    Row() {
+                        Image(
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = "Star Rating",
+                            modifier = Modifier.size(12.dp)
+                        )
+                        Text(
+                            text = "4.8",
+                            style = TextStyle(
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.Black
+                            )
+                        )
+                    }
+                }
+            }
+        }
+// Produk ke-5
         Box(
             modifier = Modifier
-                .padding(start = 22.dp, top =640.dp, end = 200.dp, bottom = 0.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Image(
-            painter = painterResource(id = R.drawable.nutrisi),
-            contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .padding(start = 34.dp, top = 650.dp, end = 210.dp, bottom = 70.dp)
-                .width(148.99998.dp)
-                .height(115.53488.dp)
-        )
-        Text(
-            text = "Pupuk POC Nasa",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-            ),
-            modifier = Modifier
-                .width(145.dp)
-                .height(40.dp)
-                .padding(start = 34.dp,top= 770.dp,end = 225.dp, bottom = 40.dp)
-        )
-        Text(
-            text = "Peralatan Hidroponik",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF878787),
-            ),
-            modifier =Modifier
-                .width(114.dp)
-                .height(14.dp)
-                .padding(start = 34.dp, top = 790.dp, end = 250.dp, bottom = 20.dp)
-        )
-        Text(
-            text = "Rp 50.000\n",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF117462),
-            ),
-            modifier = Modifier
-                .width(90.dp)
-                .height(20.dp)
-                .padding(start = 34.dp, top = 810.dp, end = 290.dp, bottom = 0.dp)
-        )
-        Text(
-            text = "4.9",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier
-                .width(16.dp)
-                .height(15.dp)
-                .padding(start = 165.dp, end = 210.dp, top = 815.dp, bottom = 0.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.star),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .padding(start = 150.dp, end = 230.dp, top = 815.dp, bottom = 0.dp)
-                .width(11.dp)
-                .height(11.dp)
-        )
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.nutrisi),
+                contentDescription = "image description",
+                modifier = Modifier
+                    .padding(start = 36.dp, top = 650.dp, end = 210.dp, bottom = 65.dp)
+                    .width(148.dp)
+                    .height(120.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(start = 36.dp, top = 780.dp, end = 80.dp),
+            ) {
+                Text(
+                    text = "Pupuk POC Nasa",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Black
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Peralatan Hidroponik",
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Row() {
+                    Text(
+                        text = "Rp 50.000",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF117462)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(46.dp))
+                    Row() {
+                        Image(
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = "Star Rating",
+                            modifier = Modifier.size(12.dp)
+                        )
+                        Text(
+                            text = "4.9",
+                            style = TextStyle(
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.Black
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
+// Produk ke-6
         Box(
             modifier = Modifier
-                .padding(start = 205.dp, top =640.dp, end = 25.dp, bottom = 0.dp )
-                .border(width = 1.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = com.example.gemahripahtaniapp.SplashScreen.Variables.radiMlg))
-                .width(12.dp)
-                .height(93.dp)
-                .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 100.dp))
-        )
-        Image(
-            painter = painterResource(id = R.drawable.hi14),
-            contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .padding(start = 215.dp, top = 650.dp, end = 34.dp, bottom = 70.dp)
-                .width(148.99998.dp)
-                .height(115.53488.dp)
-        )
-        Text(
-            text = "NFT Gullies",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF000000),
-            ),
-            modifier = Modifier
-                .width(145.dp)
-                .height(40.dp)
-                .padding(start = 215.dp,top= 770.dp,end = 34.dp, bottom = 40.dp)
-        )
-        Text(
-            text = "Peralatan Hidroponik",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF878787),
-            ),
-            modifier =Modifier
-                .width(114.dp)
-                .height(14.dp)
-                .padding(start = 215.dp, top = 790.dp, end = 34.dp, bottom = 20.dp)
-        )
-        Text(
-            text = "Rp 261.400\n",
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(700),
-                color = Color(0xFF117462),
-            ),
-            modifier = Modifier
-                .width(90.dp)
-                .height(20.dp)
-                .padding(start = 215.dp, top = 810.dp, end = 90.dp, bottom = 0.dp)
-        )
-        Text(
-            text = "4.9",
-            style = TextStyle(
-                fontSize = 10.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF000000),
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier
-                .width(16.dp)
-                .height(15.dp)
-                .padding(start = 340.dp, end = 34.dp, top = 815.dp, bottom = 0.dp)
-        )
-        Image(
-            painter = painterResource(id = R.drawable.star),
-            contentDescription = "image description",
-            contentScale = ContentScale.None,
-            modifier = Modifier
-                .padding(start = 325.dp, end = 55.dp, top = 815.dp, bottom = 0.dp)
-                .width(11.dp)
-                .height(11.dp)
-        )
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.hi14),
+                contentDescription = "image description",
+                modifier = Modifier
+                    .padding(start = 230.dp, top = 650.dp, end = 20.dp, bottom = 65.dp)
+                    .width(148.dp)
+                    .height(120.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(start = 230.dp, top = 780.dp),
+            ) {
+                Text(
+                    text = "NFT Gullies",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Black
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Peralatan Hidroponi",
+                    style = TextStyle(
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Gray
+                    )
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Row() {
+                    Text(
+                        text = "Rp 261.000",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF117462)
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(36.dp))
+                    Row() {
+                        Image(
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = "Star Rating",
+                            modifier = Modifier.size(12.dp)
+                        )
+                        Text(
+                            text = "4.9",
+                            style = TextStyle(
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = Color.Black
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
     }
 }
+
 
 
 
@@ -606,8 +575,9 @@ fun MarketScreen() {
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun GreetingPreview() {
-    MarketScreen()
+    val navController = rememberNavController()
+    MarketScreen(navHostController = navController)
 
-    }
+}
 
 
